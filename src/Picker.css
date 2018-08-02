@@ -70,7 +70,8 @@
   right: 0;
   height: 34px;
   line-height: 34px;
-  top: 119px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .xerxes-picker__indicator::before {
   content: '';
