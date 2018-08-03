@@ -26,6 +26,7 @@ class Picker extends PureComponent {
     document.addEventListener('touchend', this.onTouchEnd.bind(this))
   }
   onTouchMove (event) {
+    debugger
     if (!this.touch) {
       return
     }
@@ -39,7 +40,7 @@ class Picker extends PureComponent {
     this.end()
   }
   setMove (event, offset) {
-    offset = Math.max(this.array * this.OFFSETHEIGHT, offset)
+    offset = Math.max(this.array.length * this.OFFSETHEIGHT, offset)
     offset = Math.min(this.OFFSETHEIGHT, offset)
     this.setState({
       translateY: offset
@@ -49,7 +50,7 @@ class Picker extends PureComponent {
     this.touch = false
     this.startY = 0
     let offset = this.state.translateY
-    offset = Math.max(this.array * this.OFFSETHEIGHT, offset)
+    offset = Math.max(this.array.length * this.OFFSETHEIGHT, offset)
     offset = Math.min(this.OFFSETHEIGHT, offset)
     const n = parseInt(offset / this.OFFSETHEIGHT)
     offset = n * this.OFFSETHEIGHT
@@ -77,7 +78,11 @@ class Picker extends PureComponent {
             >
               <div className="xerxes-picker__mask-group"></div>
               <div className="xerxes-picker__indicator"></div>
-              <div className="xerxes-picker__body">
+              <div className="xerxes-picker__body"
+              style={{
+                transform: `translate3d(0, ${this.state.translateY}, 0)`
+              }}
+              >
                 {list}
               </div>
             </div>

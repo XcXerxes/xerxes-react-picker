@@ -61,7 +61,7 @@
   position: relative;
 }
 .xerxes-picker__group {
-  height: 100%;
+  transition: all .4s ease;
 }
 
 .xerxes-picker__indicator {
