@@ -22,11 +22,10 @@ class Picker extends PureComponent {
     }
     this.startY = event.touches[0].clientY
     this.touch = true
-    document.addEventListener('touchmove', this.onTouchMove.bind(this))
-    document.addEventListener('touchend', this.onTouchEnd.bind(this))
+    document.addEventListener('touchmove', this.onTouchMove.bind(this), false)
+    document.addEventListener('touchend', this.onTouchEnd.bind(this), false)
   }
   onTouchMove (event) {
-    debugger
     if (!this.touch) {
       return
     }
@@ -40,8 +39,8 @@ class Picker extends PureComponent {
     this.end()
   }
   setMove (event, offset) {
-    offset = Math.max(this.array.length * this.OFFSETHEIGHT, offset)
-    offset = Math.min(this.OFFSETHEIGHT, offset)
+    offset = Math.max((3 - this.array.length + 1) * this.OFFSETHEIGHT, offset)
+    offset = Math.min(3*this.OFFSETHEIGHT, offset)
     this.setState({
       translateY: offset
     })
@@ -50,10 +49,10 @@ class Picker extends PureComponent {
     this.touch = false
     this.startY = 0
     let offset = this.state.translateY
-    offset = Math.max(this.array.length * this.OFFSETHEIGHT, offset)
-    offset = Math.min(this.OFFSETHEIGHT, offset)
-    const n = parseInt(offset / this.OFFSETHEIGHT)
-    offset = n * this.OFFSETHEIGHT
+    offset = Math.max((3 - this.array.length + 1) * this.OFFSETHEIGHT, offset)
+    offset = Math.min(3 * this.OFFSETHEIGHT, offset)
+    const n = 3 - parseInt(offset / this.OFFSETHEIGHT)
+    offset = (3 - n) * this.OFFSETHEIGHT
     this.setState({translateY: offset})
   }
   render() {
@@ -63,29 +62,34 @@ class Picker extends PureComponent {
       </div>
     ))
     return (
-      <div className="xerxes-picker">
-         <div className="xerxes-picker__mask"></div>
-         <div className="xerxes-picker__wrapper">
+      <div className="xerxes-picker"
+      >
+         <div className="xerxes-picker__mask"
+         ></div>
+         <div className="xerxes-picker__wrapper"
+         >
+          <div className="xerxes-picker-content">
             <div className="xerxes-picker__header">
               <a href="javascript:void(0);" onClick={this.cancel} className="xerxes-picker__header-cancel" >取消</a>
               <a href="javascript:void(0);" onClick={this.confirm} className="xerxes-picker__header-confirm" >确定</a>
             </div>
             <div className="xerxes-picker__content"
-      
             >
             <div className="xerxes-picker__group"
               onTouchStart={this.onTouchStartHandle}
+              ref="pickerGroup"
             >
               <div className="xerxes-picker__mask-group"></div>
               <div className="xerxes-picker__indicator"></div>
               <div className="xerxes-picker__body"
               style={{
-                transform: `translate3d(0, ${this.state.translateY}, 0)`
+                transform: `translate3d(0, ${this.state.translateY}px, 0)`
               }}
               >
                 {list}
               </div>
             </div>
+          </div>
             </div>
          </div>
       </div>

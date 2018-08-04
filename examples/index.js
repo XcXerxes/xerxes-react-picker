@@ -1,6 +1,7 @@
 import React, {PureComponent} from 'react'
 import ReactDOM from 'react-dom'
 import Picker from '../src'
+import './index.css'
 
 class App extends PureComponent {
   render () {
